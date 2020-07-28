@@ -9,7 +9,11 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>../gmall-api</module>
-        <module>../gmall-user</module>
+        <module>../gmall-common-util</module>
+        <module>../gmall-service-util</module>
+        <module>../gmall-web-util</module>
+        <module>../gmall-user-service</module>
+        <module>../gmall-user-web</module>
     </modules>
     <packaging>pom</packaging>
     <parent>
