@@ -3,7 +3,7 @@ package com.sq.gmall.user.impl;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.sq.gmall.bean.UmsMember;
 import com.sq.gmall.bean.UmsMemberReceiveAddress;
-import com.sq.gmall.service.UserService;
+import com.sq.gmall.service.user.UserService;
 import com.sq.gmall.user.mapper.UmsMemberReceiveAddressMapper;
 import com.sq.gmall.user.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;

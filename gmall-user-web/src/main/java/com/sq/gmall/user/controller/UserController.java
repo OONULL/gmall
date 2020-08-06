@@ -4,7 +4,7 @@ package com.sq.gmall.user.controller;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.sq.gmall.bean.UmsMember;
 import com.sq.gmall.bean.UmsMemberReceiveAddress;
-import com.sq.gmall.service.UserService;
+import com.sq.gmall.service.user.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
