@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import redis.clients.jedis.Jedis;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
@@ -162,7 +163,7 @@ public class SkuServiceImpl implements SkuService {
             //设置分布式锁
             String uuid = UUID.randomUUID().toString();
             String ok = jedis.set("sku:" + skuId + ":lock", uuid, "nx", "px", 10000);//过期时间10秒
-            if (org.apache.commons.lang3.StringUtils.isNotBlank(ok) && "ok".equals(ok)) {
+            if (org.apache.commons.lang3.StringUtils.isNotBlank(ok) && "OK".equals(ok)) {
                 //获取锁成功(10内访问数据库获取数据)
                 skuInfo = getSkuByIdFromDb(skuId);
                 if (!StringUtils.isEmpty(skuInfo)) {
@@ -225,6 +226,14 @@ public class SkuServiceImpl implements SkuService {
         pmsSkuImage.setSkuId(skuId);
         List<PmsSkuImage> pmsSkuImages = pmsSkuImageMapper.select(pmsSkuImage);
         skuInfo.setSkuImageList(pmsSkuImages);
+        //sku销售属性
+        PmsSkuAttrValue pmsSkuAttrValue = new PmsSkuAttrValue();
+        pmsSkuAttrValue.setSkuId(skuId);
+        skuInfo.setSkuAttrValueList(pmsSkuAttrValueMapper.select(pmsSkuAttrValue));
+        //添加sku销售属性值
+        PmsSkuSaleAttrValue pmsSkuSaleAttrValue = new PmsSkuSaleAttrValue();
+        pmsSkuSaleAttrValue.setSkuId(skuId);
+        skuInfo.setSkuSaleAttrValueList(pmsSkuSaleAttrValueMapper.select(pmsSkuSaleAttrValue));
         return skuInfo;
     }
 
@@ -241,5 +250,20 @@ public class SkuServiceImpl implements SkuService {
             skuInfo.setSkuAttrValueList(pmsSkuAttrValueMapper.select(pmsSkuAttrValue));
         }
         return pmsSkuInfoList;
+    }
+    /**
+     * 校验订单商品价格
+     * @param productSkuId
+     * @param productPrice
+     * @return
+     */
+    @Override
+    public boolean checkPrice(String productSkuId, BigDecimal productPrice) {
+        boolean flag = false;
+        PmsSkuInfo skuInfo = pmsSkuInfoMapper.selectByPrimaryKey(productSkuId);
+        if(productPrice.compareTo(skuInfo.getPrice())==0){
+            flag = true;
+        }
+        return flag;
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @title: AttrServiceImpl
@@ -39,7 +40,7 @@ public class AttrServiceImpl implements AttrService {
     public List<PmsBaseAttrInfo> attrInfoList(Integer catalog3Id) {
 
         PmsBaseAttrInfo pmsBaseAttrInfo = new PmsBaseAttrInfo();
-        pmsBaseAttrInfo.setCatalog3Id(String.valueOf(catalog3Id));
+        pmsBaseAttrInfo.setCatalog3Id(catalog3Id+"");
         List<PmsBaseAttrInfo> pmsBaseAttrInfoList = attrInfoMapper.select(pmsBaseAttrInfo);
         //遍历获取属性值
         for (PmsBaseAttrInfo baseAttrInfo : pmsBaseAttrInfoList) {
@@ -149,5 +150,17 @@ public class AttrServiceImpl implements AttrService {
     @Override
     public List<PmsBaseSaleAttr> baseSaleAttrList() {
         return pmsBaseSaleAttrMapper.selectAll();
+    }
+
+    /**
+     * 根据valueId查询属性列表
+     * @param valueIdSet
+     * @return
+     */
+    @Override
+    public List<PmsBaseAttrInfo> getAttrValueListByBalueId(Set<String> valueIdSet) {
+        String valueIds = org.apache.commons.lang3.StringUtils.join(valueIdSet, ",");
+        return attrInfoMapper.getAttrValueListByBalueId( valueIds);
+
     }
 }

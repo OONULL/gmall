@@ -5,6 +5,7 @@ import com.sq.gmall.bean.PmsBaseAttrValue;
 import com.sq.gmall.bean.PmsBaseSaleAttr;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @Description
@@ -46,4 +47,11 @@ public interface AttrService {
      * @return
      */
     List<PmsBaseSaleAttr> baseSaleAttrList();
+
+    /**
+     * 根据valueId查询属性列表
+     * @param valueIdSet
+     * @return
+     */
+    List<PmsBaseAttrInfo> getAttrValueListByBalueId(Set<String> valueIdSet);
 }

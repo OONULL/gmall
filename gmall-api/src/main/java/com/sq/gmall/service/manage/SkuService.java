@@ -2,6 +2,7 @@ package com.sq.gmall.service.manage;
 
 import com.sq.gmall.bean.PmsSkuInfo;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -43,4 +44,12 @@ public interface SkuService {
      * @return
      */
     public List<PmsSkuInfo> getAllSku();
+
+    /**
+     * 校验订单商品价格
+     * @param productSkuId
+     * @param productPrice
+     * @return
+     */
+    boolean checkPrice(String productSkuId, BigDecimal productPrice);
 }
